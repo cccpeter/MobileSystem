@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title> - </title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="../plugins/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../plugins/hadmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="../plugins/hadmin/css/animate.css" rel="stylesheet">
+    <link href="../plugins/hadmin/css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 引入cookie-->
+    <script type="text/javascript" src="../plugins/tool/cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css">
+    <script type="text/javascript" src="../plugins/layui/layui.all.js"></script>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="row row-sm text-center">
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item">
+                                    <div class="h1 text-info font-thin h1" id="custNum">100</div>
+                                    <span class="text-muted text-xs">客户数量</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item bg-info">
+                                    <div class="h1 text-fff font-thin h1" id="packageNum">10</div>
+                                    <span class="text-muted text-xs">套餐数量</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item bg-primary">
+                                    <div class="h1 text-fff font-thin h1" id="saleNum">11</div>
+                                    <span class="text-muted text-xs">业务员</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title" style="border-bottom:none;background:#fff;">
+                                <h5>服务器状态</h5>
+                            </div>
+                            <div class="ibox-content" style="border-top:none;">
+                                <div id="flot-line-chart-moving" style="height:217px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 全局js -->
+<script src="../plugins/hadmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="../plugins/hadmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../plugins/hadmin/js/plugins/layer/layer.min.js"></script>
+<!-- Flot -->
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.pie.js"></script>
+<!-- 自定义js -->Å
+<script src="../plugins/hadmin/js/content.js"></script>
+<!--flotdemo-->
+<script type="text/javascript">
+$(function() {
+    // 初始化数据
+    // $http("/admin/getSysData","post","",initSysData);
+    $http("/admin/getSysData","post",data,function(result){
+        console.log(result);
+    })
+
+    var container = $("#flot-line-chart-moving");
+    var maximum = container.outerWidth() / 2 || 300;
+    var data = [];
+
+    function getRandomData() {
+        if (data.length) {
+            data = data.slice(1);
+        }
+        while (data.length < maximum) {
+            var previous = data.length ? data[data.length - 1] : 50;
+            var y = previous + Math.random() * 10 - 5;
+            data.push(y < 0 ? 0 : y > 100 ? 100 : y);
+        }
+        var res = [];
+        for (var i = 0; i < data.length; ++i) {
+            res.push([i, data[i]])
+        }
+        return res;
+    }
+    series = [{
+        data: getRandomData(),
+        lines: {
+            fill: true
+        }
+    }];
+    var plot = $.plot(container, series, {
+        grid: {
+
+            color: "#999999",
+            tickColor: "#f7f9fb",
+            borderWidth:0,
+            minBorderMargin: 20,
+            labelMargin: 10,
+            backgroundColor: {
+                colors: ["#ffffff", "#ffffff"]
+            },
+            margin: {
+                top: 8,
+                bottom: 20,
+                left: 20
+            },
+            markings: function(axes) {
+                var markings = [];
+                var xaxis = axes.xaxis;
+                for (var x = Math.floor(xaxis.min); x < xaxis.max; x += xaxis.tickSize * 2) {
+                    markings.push({
+                        xaxis: {
+                            from: x,
+                            to: x + xaxis.tickSize
+                        },
+                        color: "#fff"
+                    });
+                }
+                return markings;
+            }
+        },
+        colors: ["#4fc5ea"],
+        xaxis: {
+            tickFormatter: function() {
+                return "";
+            }
+        },
+        yaxis: {
+            min: 0,
+            max: 110
+        },
+        legend: {
+            show: true
+        }
+    });
+    setInterval(function updateRandom() {
+        series[0].data = getRandomData();
+        plot.setData(series);
+        plot.draw();
+    }, 2000);
+});
+function initSysData(result){
+    console.log(result);
+}
+</script>
+</body>
+
+</html>
