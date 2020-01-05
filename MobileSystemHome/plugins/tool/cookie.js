@@ -41,6 +41,13 @@ function getRootPath(){
   var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1); 
   return(prePath+postPath); 
 } 
+function isEmpty(data){
+  if(data==null || data=="" || data==undefined){
+    return true;
+  }else{
+    return false;
+  }
+}
 /**
 * 根据变量名获取匹配值
 */
@@ -90,6 +97,9 @@ var $http = function(url,type,data,callback){
       }
       // 回调函数
       callback(res);
+    },
+    error:function(res){
+      // location.href="../login/login.html";
     }
   })
 }

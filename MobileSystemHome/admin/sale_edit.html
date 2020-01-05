@@ -38,7 +38,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">地址：</label>
             <div class="col-sm-9">
-                <input autocomplete="off" type="text" id="user_addr" class="form-control" placeholder="请输入地址">
+                <input autocomplete="off" type="text" id="user_addrs" class="form-control" placeholder="请输入地址">
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">登录密码</label>
             <div class="col-sm-9">
-                <input autocomplete="off" type="password" id="user_password" class="form-control" placeholder="请输入密码">
+                <input autocomplete="off" type="text" id="user_password" class="form-control" placeholder="请输入密码">
             </div>
         </div>
         <div class="form-group">
@@ -63,6 +63,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="user_id">
 </form>
 </div>
 <!-- 全局js -->
@@ -82,13 +83,26 @@
 </script>
 </body>
 <script type="text/javascript">
+    $(function(){
+        $http("/admin/getUser","post",{user_id:getQueryString("id")},function(res){
+            if(res.code == 200){
+                $("#user_id").val(res.data.user_id);
+                $("#user_number").val(res.data.user_number);                
+                $("#user_name").val(res.data.user_name);              
+                $("#user_addrs").val(res.data.user_addrs);
+                $("#user_password").val(res.data.user_password);              
+                $("#user_sex").val(res.data.user_sex);
+            }
+        })
+    })
     $("#submit").on("click",function(){
+        var user_id = $("#user_id").val();
         var user_number = $("#user_number").val();
         var user_name = $("#user_name").val();
-        var user_addr = $("#user_addr").val();
+        var user_addrs = $("#user_addrs").val();
         var user_password = $("#user_password").val();
         var user_sex = $("#user_sex").val();
-        if(isEmpty(user_number)||isEmpty(user_name)||isEmpty(user_addr)||isEmpty(user_password)||isEmpty(user_sex)){
+        if(isEmpty(user_number)||isEmpty(user_name)||isEmpty(user_addrs)||isEmpty(user_password)||isEmpty(user_sex)){
             layer.msg("必须字段不能为空");
             return false;
         }
@@ -96,9 +110,10 @@
             "/admin/addUser",
             "post",
             {
+                user_id:user_id,
                 user_number:user_number,
                 user_name:user_name,
-                user_addr:user_addr,
+                user_addrs:user_addrs,
                 user_password:user_password,
                 user_sex:user_sex
             },function(res){
