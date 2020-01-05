@@ -20,7 +20,7 @@ class MobileApplicationTests {
 
 	@Test
 	public void test(){
-		List<Map<String, Object>> list = baseFunctionService.getSqlResult("select * from user");
+		List<Map<String, Object>> list = baseFunctionService.getSqlResult("select * from User");
 		list.forEach(item->System.out.println(item.get("user_id")));
 	}
 }

@@ -11,7 +11,7 @@
 
     <title> - </title>
 
-    <link rel="shortcut icon" href="favicon.ico"> <link href="../plugins/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../plugins/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="../plugins/hadmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 
     <link href="../plugins/hadmin/css/animate.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../plugins/layui/layui.all.js"></script>
 </head>
 
-<body class="gray-bg">
+<body style="background-color: #f0f3f4;">
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-sm-10">
@@ -30,8 +30,8 @@
                     <div class="col-sm-4">
                         <div class="row row-sm text-center">
                             <div class="col-xs-6">
-                                <div class="panel padder-v item">
-                                    <div class="h1 text-info font-thin h1" id="custNum">100</div>
+                                <div class="panel padder-v item ">
+                                    <div class="h1 text-info font-thin h1" id="custNum">-</div>
                                     <span class="text-muted text-xs">客户数量</span>
                                     <div class="top text-right w-full">
                                         <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="panel padder-v item bg-info">
-                                    <div class="h1 text-fff font-thin h1" id="packageNum">10</div>
+                                    <div class="h1 text-fff font-thin h1" id="packageNum">-</div>
                                     <span class="text-muted text-xs">套餐数量</span>
                                     <div class="top text-right w-full">
                                         <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -49,8 +49,17 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="panel padder-v item bg-primary">
-                                    <div class="h1 text-fff font-thin h1" id="saleNum">11</div>
+                                    <div class="h1 text-fff font-thin h1" id="saleNum">-</div>
                                     <span class="text-muted text-xs">业务员</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item bg-primary">
+                                    <div class="h1 text-fff font-thin h1" id="adminNum">-</div>
+                                    <span class="text-muted text-xs">管理员</span>
                                     <div class="top text-right w-full">
                                         <i class="fa fa-caret-down text-warning m-r-sm"></i>
                                     </div>
@@ -82,17 +91,13 @@
 <script src="../plugins/hadmin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
 <script src="../plugins/hadmin/js/plugins/flot/jquery.flot.resize.js"></script>
 <script src="../plugins/hadmin/js/plugins/flot/jquery.flot.pie.js"></script>
-<!-- 自定义js -->Å
+<!-- 自定义js -->
 <script src="../plugins/hadmin/js/content.js"></script>
 <!--flotdemo-->
 <script type="text/javascript">
 $(function() {
     // 初始化数据
-    // $http("/admin/getSysData","post","",initSysData);
-    $http("/admin/getSysData","post",data,function(result){
-        console.log(result);
-    })
-
+    initSysData();
     var container = $("#flot-line-chart-moving");
     var maximum = container.outerWidth() / 2 || 300;
     var data = [];
@@ -169,8 +174,14 @@ $(function() {
         plot.draw();
     }, 2000);
 });
-function initSysData(result){
-    console.log(result);
+function initSysData(){
+    $http("/admin/getSysData","post","",function(result){
+        // console.log(result);
+        $("#custNum").html(result.data.userNum);
+        $("#packageNum").html(result.data.packageNum);
+        $("#saleNum").html(result.data.saleNum);
+        $("#adminNum").html(result.data.adminNum);
+    })
 }
 </script>
 </body>

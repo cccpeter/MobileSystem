@@ -3,7 +3,8 @@ package com.mobile.mobile.entity;
 import javax.persistence.*;
 
 @Entity
-public class packagelist {
+@Table(name = "packagelist")
+public class Packagelist {
 
 	public Integer getPackage_id() {
 		return package_id;

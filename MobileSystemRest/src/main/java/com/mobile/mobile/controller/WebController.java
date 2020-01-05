@@ -1,7 +1,7 @@
 package com.mobile.mobile.controller;
 
 import com.mobile.mobile.entity.ResponseBean;
-import com.mobile.mobile.entity.user;
+import com.mobile.mobile.entity.User;
 import com.mobile.mobile.service.UserService;
 import com.mobile.mobile.util.JWTUtil;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +34,7 @@ public class WebController {
     public ResponseBean login(@RequestParam("username") String username,
                                                   @RequestParam("password") String password) {
         System.out.println(username);
-        user userBean = userService.getUserinfo(username);
+        User userBean = userService.getUserinfo(username);
         if (userBean.getUser_password().equals(password)) {
             Map<String, String> data = new HashMap<>();
             data.put("token", JWTUtil.sign(username, password));

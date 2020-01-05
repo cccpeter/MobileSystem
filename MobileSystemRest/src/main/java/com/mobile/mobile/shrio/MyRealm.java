@@ -1,7 +1,7 @@
 package com.mobile.mobile.shrio;
 
+import com.mobile.mobile.entity.User;
 import com.mobile.mobile.util.JWTUtil;
-import com.mobile.mobile.entity.user;
 import com.mobile.mobile.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -11,14 +11,12 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.LogManager;
 
 @Service
 public class MyRealm extends AuthorizingRealm {
@@ -45,7 +43,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = JWTUtil.getUsername(principals.toString());
-        user user = userService.getUserinfo(username);
+        User user = userService.getUserinfo(username);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRole(user.getUser_role());
         Set<String> permission = new HashSet<>(Arrays.asList(user.getUser_permission().split(",")));
@@ -67,7 +65,7 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("token invalid");
         }
 
-        user userBean = userService.getUserinfo(username);
+        User userBean = userService.getUserinfo(username);
         if (userBean == null) {
             throw new AuthenticationException("User didn't existed!");
         }

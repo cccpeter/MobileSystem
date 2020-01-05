@@ -3,7 +3,8 @@ package com.mobile.mobile.entity;
 import javax.persistence.*;
 
 @Entity
-public class number {
+@Table(name = "number")
+public class PhoneNumber {
 
 	public Integer getNumber_id() {
 		return number_id;

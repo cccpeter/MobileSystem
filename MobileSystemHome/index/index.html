@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title> Mobile System - Index</title>
+    <title> Mobile System - </title>
 
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../plugins/layui/layui.all.js"></script>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper">
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden;">
+    <div id="wrapper" style="overflow: hidden;">
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -76,7 +76,6 @@
 
     <!-- 自定义js -->
     <script src="../plugins/hadmin/js/hAdmin.js?v=4.1.0"></script>
-    <script type="text/javascript" src="../plugins/hadmin/js/index.js"></script>
 
     <!-- 第三方插件 -->
     <script src="../plugins/hadmin/js/plugins/pace/pace.min.js"></script>
@@ -87,6 +86,12 @@ $(function(){
     //初始化菜单
     initMenu();
 })
+//动态生成必须使用全局的监听
+$(document).on("click",".J_menuItem",function(){
+     var url = $(this).attr('href');
+    $("#J_iframe").attr('src',url);
+    return false;
+});
 function initMenu(){
     var usertype = getCookie("usertype");
     $("#userName").html(getCookie("username"));
@@ -95,7 +100,7 @@ function initMenu(){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">管理员</span></li>'
         render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">配置项</span><span class="fa arrow"></span></a>'
-        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="graph_echarts.html">业务员配置</a></li>'
+        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="../admin/sale_list.html">业务员配置</a></li>'
         render += '<li><a class="J_menuItem" href="graph_flot.html">收费项目配置</a></li><li><a class="J_menuItem" href="graph_morris.html">手机套餐配置</a></li><li><a class="J_menuItem" href="graph_morris.html">手机号码录入</a></li></ul></li>'
     }else if(usertype == "user"){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">用户</span></li>'
