@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface packagelistDao extends JpaRepository<Packagelist,String> {
+public interface PackagelistDao extends JpaRepository<Packagelist,String> {
 }

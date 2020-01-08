@@ -57,7 +57,7 @@
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0" style="float: left;">
                     <div class="navbar-header" style="float: left;"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
                     </div>
-                    <div style="float: right;padding: 10px;margin-right: 40px;"> 欢迎您：<span id="userName">MS-SYS</span></div>
+                    <div style="float: right;padding: 10px;margin-right: 40px;"> 欢迎您：<span id="userName">MS-SYS</span> <a href="../login/login.html">退出</a></div>
                 </nav>
             </div>
             <div class="row J_mainContent" id="content-main">
@@ -101,18 +101,18 @@ function initMenu(){
         render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">配置项</span><span class="fa arrow"></span></a>'
         render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="../admin/sale_list.html">业务员配置</a></li>'
-        render += '<li><a class="J_menuItem" href="graph_flot.html">收费项目配置</a></li><li><a class="J_menuItem" href="graph_morris.html">手机套餐配置</a></li><li><a class="J_menuItem" href="graph_morris.html">手机号码录入</a></li></ul></li>'
+        render += '<li><a class="J_menuItem" href="../admin/rent_list.html">收费项目配置</a></li><li><a class="J_menuItem" href="../admin/package_list.html">手机套餐配置</a></li><li><a class="J_menuItem" href="../admin/number_list.html">手机号码录入</a></li></ul></li>'
     }else if(usertype == "user"){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">用户</span></li>'
-        render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">个人信息'
+        render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">手机业务查询</span><span class="fa arrow"></span></a>'
         render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="graph_echarts.html">手机套餐查询</a></li>'
         render += '</ul></li>'
     }else if(usertype == "sale"){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">业务员</span></li>'
-        render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">开户'
+        render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">用户配置</span><span class="fa arrow"></span></a>'
-        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="graph_echarts.html">用户</a></li>'
+        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="../sale/user_list.html">用户管理</a></li>'
         render += '<li><a class="J_menuItem" href="graph_flot.html">Flot</a></li><li><a class="J_menuItem" href="graph_morris.html">Morris.js</a></li></ul></li>'
     }
     $("#side-menu").append(render);

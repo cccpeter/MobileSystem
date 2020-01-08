@@ -32,7 +32,6 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping({"/getSysData"})
-	@RequiresRoles("admin")
 	public ResponseBean getUserDetail(HttpServletRequest request){
 		StringBuffer userSql = new StringBuffer();
 		StringBuffer packageSql = new StringBuffer();
@@ -65,6 +64,7 @@ public class AdminController {
 	 * @return value
 	 */
 	@RequestMapping("/getSaleList")
+	@RequiresRoles("admin")
 	public ResponseBean getSaleList(){
 		User user = new User();
 		user.setUser_role("sale");
@@ -79,6 +79,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping("/addUser")
+	@RequiresRoles("admin")
 	public ResponseBean addUser(HttpServletRequest request){
 		String user_number = request.getParameter("user_number");
 		String user_name = request.getParameter("user_name");
@@ -109,6 +110,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping("/getUser")
+	@RequiresRoles("admin")
 	public ResponseBean getUser(HttpServletRequest request){
 		String user_id = request.getParameter("user_id");
 		User user = new User();
@@ -122,5 +124,25 @@ public class AdminController {
 		}
 	}
 
-	
+	/**
+	 * 删除业务员
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/delSale")
+	@RequiresRoles("admin")
+	public ResponseBean delSale(HttpServletRequest request){
+		String ids = request.getParameter("ids");
+		if(StringUtils.isNotEmpty(ids)){
+			String[] idList = ids.split(",");
+			for (int i=0;i<idList.length;i++){
+				User user = new User();
+				user.setUser_id(Integer.parseInt(idList[i]));
+				userDao.delete(user);
+			}
+			return new ResponseBean(200, "delete success", null);
+		}else{
+			return new  ResponseBean(500, "delete data error",null);
+		}
+	}
 }

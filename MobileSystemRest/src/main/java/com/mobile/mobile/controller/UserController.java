@@ -40,6 +40,19 @@ public class UserController {
 		 return list.get(0).getUser_name();
 	}
 
+	/**
+	 * 获取用户列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getUserList")
+	public ResponseBean getUserList(HttpServletRequest request){
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select u1.*,u2.user_name as createdByName from user as u1 left join user as u2 on u1.user_createdby = u2.user_id  where u1.user_role='user'");
+		List<Map<String,Object>> resultList = baseFunctionService.getSqlResult(sql.toString());
+		return new ResponseBean(200, "get data success", resultList);
+	}
+
 	@RequestMapping({"/testRole"})
 	@RequiresRoles("admin")
 	public ResponseBean getClasses(@RequestParam("username") String username){

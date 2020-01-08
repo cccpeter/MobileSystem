@@ -27,31 +27,27 @@
                 <div class="col-sm-12">
                     <!-- Example Pagination -->
                     <div class="example-wrap">
-                        <h4 class="example-title">业务员列表</h4>
+                        <h4 class="example-title">套餐列表</h4>
                         <div style="float:left;margin-top: 10px;">
-                            <button class="btn btn-info btn-rounded" onclick="addSale();">新增</button>
-                            <button class="btn btn-primary btn-rounded" onclick="editSale();">编辑</button>
-                            <button class="btn btn-danger btn-rounded" onclick="delSale();">删除</button>
+                            <button class="btn btn-info btn-rounded" onclick="addPackage();">新增</button>
+                            <button class="btn btn-danger btn-rounded" onclick="delPackage();">删除</button>
                         </div>
                         <div class="example">
                         <!--  data-toggle="table" data-url="../plugins/hadmin/js/demo/bootstrap_table_test.json" -->
-                            <table id="s-table-saleList"  data-toggle="table" data-query-params="queryParams" data-mobile-responsive="true" data-height="400" data-pagination="true" data-icon-size="outline" data-search="true">
+                            <table id="s-table-packageList"  data-toggle="table" data-query-params="queryParams" data-mobile-responsive="true" data-height="400" data-pagination="true" data-icon-size="outline" data-search="true">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="user_id">ID</th>
-                                        <th data-field="user_name">姓名</th>
-                                        <th data-field="user_number">登录账号</th>
-                                        <th data-field="user_addrs">地址</th>
-                                        <th data-field="user_password">登录密码</th>
-                                        <th data-field="user_sex">性别</th>
-                                        <th data-field="user_status">状态</th>
+                                        <th data-field="package_id">ID</th>
+                                        <th data-field="package_monthRent">月租</th>
+                                        <th data-field="package_minCharge">通话费/min</th>
+                                        <th data-field="package_msgCharge">短信费/条</th>
+                                        <th data-field="package_totalTraffic">流量总量</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
-                    <!-- End Example Pagination -->
                 </div>
             </div>
         </div>
@@ -72,67 +68,46 @@
 <script type="text/javascript">
 $(function(){
     // 初始化业务员数据
-    $http("/admin/getSaleList","post","",function(result){
-        $("#s-table-saleList").bootstrapTable('load',result.data);
+    $http("/admin/getPackageList","post","",function(result){
+        $("#s-table-packageList").bootstrapTable('load',result.data);
     })
 
 });
 /**
- * @desc      [添加业务员]
+ * @desc      [添加套餐]
  * @Author    cpeter
  * @copyright [copyright]
  * @version   [version]
  */
-function addSale(){
+function addPackage(){
     layer.open({
         type:2,
         area:['50%','600px'],
-        content:'../admin/sale_add.html',
+        content:'../admin/package_add.html',
         success:function(layero,index){
 
         }
     })
 }
-/**
- * @desc      [编辑业务员]
- * @Author    cpeter
- * @copyright [copyright]
- * @version   [version]
- * @return    {[type]}    [description]
- */
-function editSale(){
-    var selections = $("#s-table-saleList").bootstrapTable('getSelections');
-    if(selections.length!=1){
-        layer.msg("请选择一条数据");
-        return false;
-    }
-    layer.open({
-        type:2,
-        area:['50%','600px'],
-        content:'../admin/sale_edit.html?id='+selections[0].user_id,
-        success:function(layero,index){
 
-        }
-    })
-}
 /**
- * @desc      [删除业务员]
+ * @desc      [删除套餐]
  * @Author    cpeter
  * @copyright [copyright]
  * @version   [version]
  * @return    {[type]}    [description]
  */
-function delSale(){
-    var selections = $("#s-table-saleList").bootstrapTable('getSelections');
+function delPackage(){
+    var selections = $("#s-table-packageList").bootstrapTable('getSelections');
     if(selections.length==0){
         layer.msg("至少选择一条数据");
         return false;
     }
     var ids = "";
     for(var i=0;i<selections.length;i++){
-        ids += selections[i].user_id+",";
+        ids += selections[i].package_id+",";
     }
-    $http("/admin/delSale","post",{ids:encodeURI(ids)},function(res){
+    $http("/admin/delPackagelist","post",{ids:encodeURI(ids)},function(res){
         layer.msg(res.msg);
     });
 }

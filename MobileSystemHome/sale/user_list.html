@@ -27,21 +27,21 @@
                 <div class="col-sm-12">
                     <!-- Example Pagination -->
                     <div class="example-wrap">
-                        <h4 class="example-title">业务员列表</h4>
+                        <h4 class="example-title">用户列表</h4>
                         <div style="float:left;margin-top: 10px;">
-                            <button class="btn btn-info btn-rounded" onclick="addSale();">新增</button>
-                            <button class="btn btn-primary btn-rounded" onclick="editSale();">编辑</button>
-                            <button class="btn btn-danger btn-rounded" onclick="delSale();">删除</button>
+                            <button class="btn btn-info btn-rounded" onclick="addUser();">新增</button>
+                            <button class="btn btn-primary btn-rounded" onclick="editUser();">编辑</button>
+                            <button class="btn btn-danger btn-rounded" onclick="delUser();">删除</button>
                         </div>
                         <div class="example">
                         <!--  data-toggle="table" data-url="../plugins/hadmin/js/demo/bootstrap_table_test.json" -->
-                            <table id="s-table-saleList"  data-toggle="table" data-query-params="queryParams" data-mobile-responsive="true" data-height="400" data-pagination="true" data-icon-size="outline" data-search="true">
+                            <table id="s-table-userList"  data-toggle="table" data-query-params="queryParams" data-mobile-responsive="true" data-height="400" data-pagination="true" data-icon-size="outline" data-search="true">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
                                         <th data-field="user_id">ID</th>
                                         <th data-field="user_name">姓名</th>
-                                        <th data-field="user_number">登录账号</th>
+                                        <th data-field="user_number">身份证[登陆账号]</th>
                                         <th data-field="user_addrs">地址</th>
                                         <th data-field="user_password">登录密码</th>
                                         <th data-field="user_sex">性别</th>
@@ -72,8 +72,8 @@
 <script type="text/javascript">
 $(function(){
     // 初始化业务员数据
-    $http("/admin/getSaleList","post","",function(result){
-        $("#s-table-saleList").bootstrapTable('load',result.data);
+    $http("/user/getUserList","post","",function(result){
+        $("#s-table-userList").bootstrapTable('load',result.data);
     })
 
 });
@@ -83,11 +83,11 @@ $(function(){
  * @copyright [copyright]
  * @version   [version]
  */
-function addSale(){
+function addUser(){
     layer.open({
         type:2,
         area:['50%','600px'],
-        content:'../admin/sale_add.html',
+        content:'../sale/user_add.html',
         success:function(layero,index){
 
         }
@@ -100,8 +100,8 @@ function addSale(){
  * @version   [version]
  * @return    {[type]}    [description]
  */
-function editSale(){
-    var selections = $("#s-table-saleList").bootstrapTable('getSelections');
+function editUser(){
+    var selections = $("#s-table-userList").bootstrapTable('getSelections');
     if(selections.length!=1){
         layer.msg("请选择一条数据");
         return false;
@@ -109,7 +109,7 @@ function editSale(){
     layer.open({
         type:2,
         area:['50%','600px'],
-        content:'../admin/sale_edit.html?id='+selections[0].user_id,
+        content:'../admin/user_edit.html?id='+selections[0].user_id,
         success:function(layero,index){
 
         }
@@ -122,7 +122,7 @@ function editSale(){
  * @version   [version]
  * @return    {[type]}    [description]
  */
-function delSale(){
+function delUser(){
     var selections = $("#s-table-saleList").bootstrapTable('getSelections');
     if(selections.length==0){
         layer.msg("至少选择一条数据");
@@ -132,7 +132,7 @@ function delSale(){
     for(var i=0;i<selections.length;i++){
         ids += selections[i].user_id+",";
     }
-    $http("/admin/delSale","post",{ids:encodeURI(ids)},function(res){
+    $http("/admin/delUser","post",{ids:encodeURI(ids)},function(res){
         layer.msg(res.msg);
     });
 }

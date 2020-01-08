@@ -1,5 +1,5 @@
 var ROOT = getRootPath();
-var REST = "http://localhost:7800"
+var REST = "http://localhost:7900"
 /**
  * [getCookie description]
  * @author cpeter
@@ -83,6 +83,7 @@ var $http = function(url,type,data,callback){
         case 200:
         break;
         case 401:
+          location.href="../login/login.html";
           alert(res.msg);
         break;
         case 500:
@@ -100,6 +101,7 @@ var $http = function(url,type,data,callback){
     },
     error:function(res){
       // location.href="../login/login.html";
+      alert("出现不可以预料错误，请联系管理员");
     }
   })
 }

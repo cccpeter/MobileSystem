@@ -1,9 +1,9 @@
 package com.mobile.mobile.dao;
 
-import com.mobile.mobile.entity.PhoneNumber;
+import com.mobile.mobile.entity.Rent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface numberDao extends JpaRepository<PhoneNumber,String> {
+public interface RentDao extends JpaRepository<Rent,String> {
 }
