@@ -27,11 +27,8 @@
                 <div class="col-sm-12">
                     <!-- Example Pagination -->
                     <div class="example-wrap">
-                        <h4 class="example-title">用户手机列表</h4>
+                        <h4 class="example-title">号码列表</h4>
                         <div style="float:left;margin-top: 10px;">
-                            <button class="btn btn-info btn-rounded" onclick="addUser();">新增用户</button>
-                            <button class="btn btn-primary btn-rounded" onclick="stopNumber();">停用号码</button>
-                            <button class="btn btn-danger btn-rounded" onclick="destoryNumber();">注销号码</button>
                         </div>
                         <div class="example">
                         <!--  data-toggle="table" data-url="../plugins/hadmin/js/demo/bootstrap_table_test.json" -->
@@ -73,79 +70,14 @@
 </body>
 <script type="text/javascript">
 $(function(){
-    // 初始化业务员数据
-    $http("/user/getUserList","post","",function(result){
+    var user_number = getCookie("username");
+    // 初始化user数据
+    $http("/user/getUser","post",{user_number:user_number},function(result){
         $("#s-table-userList").bootstrapTable('load',result.data);
     })
 
 });
-/**
- * @desc      [添加用户]
- * @Author    cpeter
- * @copyright [copyright]
- * @version   [version]
- */
-function addUser(){
-    layer.open({
-        type:2,
-        area:['50%','600px'],
-        content:'../sale/user_add.html',
-        success:function(layero,index){
 
-        }
-    })
-}
-/**
- * @desc      [停用号码]
- * @Author    cpeter
- * @copyright [copyright]
- * @version   [version]
- * @return    {[type]}    [description]
- */
-function stopNumber(){
-    var selections = $("#s-table-userList").bootstrapTable('getSelections');
-    if(selections.length!=1){
-        layer.msg("请选择一条数据");
-        return false;
-    }
-    var phone_number = selections[0].phone_number;
-    var user_id = selections[0].user_id;
-    if(phone_number==""||phone_number==null||phone_number==undefined){
-        layer.msg("该用户没有号码，不能停用");
-        return false;
-    }
-    $http("/user/stopNumber","post",{phone_number:phone_number,user_id:user_id},function(res){
-        layer.msg(res.msg);
-    })
-}
-/**
- * @desc      [删除业务员]
- * @Author    cpeter
- * @copyright [copyright]
- * @version   [version]
- * @return    {[type]}    [description]
- */
-function destoryNumber(){
-    var selections = $("#s-table-userList").bootstrapTable('getSelections');
-    if(selections.length==0){
-        layer.msg("至少选择一条数据");
-        return false;
-    }
-    var phone_number = selections[0].phone_number;
-    var user_id = selections[0].user_id;
-    if(phone_number==""||phone_number==null||phone_number==undefined){
-        layer.msg("该用户没有号码，不能注销");
-        return false;
-    }
-    layer.open({
-        type:2,
-        area:['50%','600px'],
-        content:'../sale/destoryNumber.html?user_id='+user_id+'&phone_number='+phone_number,
-        success:function(layero,index){
-            
-        }
-    })
-}
 
 
 

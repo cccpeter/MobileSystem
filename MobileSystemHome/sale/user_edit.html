@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+    <title> - </title>
+
+    <link href="../plugins/hadmin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../plugins/hadmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="../plugins/hadmin/css/animate.css" rel="stylesheet">
+    <link href="../plugins/hadmin/css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 引入cookie-->
+    <script type="text/javascript" src="../plugins/tool/cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css">
+    <script type="text/javascript" src="../plugins/layui/layui.all.js"></script>
+</head>
+<body>
+<div class="wrapper wrapper-content">
+<form autocomplete="off">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">登录账号：</label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" id="user_number" class="form-control" placeholder="请输入登录账号">
+            </div>
+        </div>
+        <div class="form-group ui-sortable-helper">
+            <label class="col-sm-3 control-label">姓名：</label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" id="user_name" class="form-control" placeholder="请输入姓名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">地址：</label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" id="user_addrs" class="form-control" placeholder="请输入地址">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">登录密码</label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" id="user_password" class="form-control" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">性别：</label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" id="user_sex" class="form-control" placeholder="请输入性别">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-11">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button style="float:right;" class="btn btn-primary " type="button" id="submit"><i class="fa fa-check"></i>&nbsp;提交</button>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="user_id">
+</form>
+</div>
+<!-- 全局js -->
+<script src="../plugins/hadmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="../plugins/hadmin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../plugins/hadmin/js/plugins/layer/layer.min.js"></script>
+<!-- Flot -->
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="../plugins/hadmin/js/plugins/flot/jquery.flot.pie.js"></script>
+<!-- 自定义js -->
+<script src="../plugins/hadmin/js/content.js"></script>
+<!--flotdemo-->
+<script type="text/javascript">
+
+</script>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $http("/admin/getUser","post",{user_id:getQueryString("id")},function(res){
+            if(res.code == 200){
+                $("#user_id").val(res.data.user_id);
+                $("#user_number").val(res.data.user_number);                
+                $("#user_name").val(res.data.user_name);              
+                $("#user_addrs").val(res.data.user_addrs);
+                $("#user_password").val(res.data.user_password);              
+                $("#user_sex").val(res.data.user_sex);
+            }
+        })
+    })
+    $("#submit").on("click",function(){
+        var user_id = $("#user_id").val();
+        var user_number = $("#user_number").val();
+        var user_name = $("#user_name").val();
+        var user_addrs = $("#user_addrs").val();
+        var user_password = $("#user_password").val();
+        var user_sex = $("#user_sex").val();
+        if(isEmpty(user_number)||isEmpty(user_name)||isEmpty(user_addrs)||isEmpty(user_password)||isEmpty(user_sex)){
+            layer.msg("必须字段不能为空");
+            return false;
+        }
+        $http(
+            "/admin/addUser",
+            "post",
+            {
+                user_id:user_id,
+                user_number:user_number,
+                user_name:user_name,
+                user_addrs:user_addrs,
+                user_password:user_password,
+                user_sex:user_sex
+            },function(res){
+                layer.msg(res.data);
+            }
+        );
+    });
+</script>
+
+
+
+
+
+
+</html>

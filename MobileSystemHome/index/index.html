@@ -106,14 +106,14 @@ function initMenu(){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">用户</span></li>'
         render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">手机业务查询</span><span class="fa arrow"></span></a>'
-        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="graph_echarts.html">手机套餐查询</a></li>'
+        render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="../sale/user.html">手机套餐查询</a></li>'
         render += '</ul></li>'
     }else if(usertype == "sale"){
         render += '<li class="hidden-folded padder m-t m-b-sm text-muted text-xs"><span class="ng-scope">业务员</span></li>'
         render += '<li><a class="J_menuItem" href="index_v1.html"><i class="fa fa-home"></i><span class="nav-label">MS-Status'
         render += '</span></a></li><li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">用户配置</span><span class="fa arrow"></span></a>'
         render += '<ul class="nav nav-second-level"><li><a class="J_menuItem" href="../sale/user_list.html">用户管理</a></li>'
-        render += '<li><a class="J_menuItem" href="graph_flot.html">Flot</a></li><li><a class="J_menuItem" href="graph_morris.html">Morris.js</a></li></ul></li>'
+        render += '</ul></li>'
     }
     $("#side-menu").append(render);
 }
